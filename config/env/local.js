@@ -12,6 +12,7 @@ const config = {
     server: {
         PORT: 3001,
         HOSTNAME: 'http://localhost:3001/'
-    }
+    },
+    secret: '876sdf&%&^435345(*^&^654sdsdc&^&kjsdfjbksdureyy3(&(*&(&7$%^#%#&^*(&)*)*'
 };
 module.exports = config;
