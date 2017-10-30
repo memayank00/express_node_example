@@ -18,7 +18,7 @@ var stylus = require('stylus');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var users = require('./routes/test');
+var test = require('./routes/test');
 var config = require(path.resolve('./config/env/local'));
 
 var app = express();
@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/test', users);
+app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
