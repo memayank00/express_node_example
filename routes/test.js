@@ -32,5 +32,5 @@ router.post('/secondCallAdd', ctrl.testing2Ctrl.getSecondTestAdd);
 router.post('/secondCallFind', ctrl.testing2Ctrl.getSecondTestFind);
 router.post('/secondCallUpdate', ctrl.testing2Ctrl.getSecondTestUpdate);
 router.post('/getSecondTestAuthentication', ctrl.testing2Ctrl.getSecondTestAuthentication);
-
+router.post('/sendSmsTwilio', ctrl.testing2Ctrl.sendSmsTwilio);
 module.exports = router; 
