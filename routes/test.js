@@ -22,11 +22,9 @@ fs.readdirSync(path.resolve('./controllers/test')).forEach(file => {
 
 router.use(expressJWT({ 
 	secret: new Buffer(config.secret).toString('base64')
-}).unless({path: 
-	[
+}).unless({path: [
 	'/test/getSecondTestAuthentication'
-	]
-}));
+]}));
 
 //console.log(ctrl);
 router.post('/firstCall', ctrl.testingCtrl.getFirstTest);
