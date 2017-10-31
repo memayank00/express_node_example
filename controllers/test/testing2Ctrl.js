@@ -9,6 +9,9 @@ const jwt 	 	= require('jsonwebtoken'),
   	  Test      = require(path.resolve('./models/test'));
 
 exports.sendSmsTwilio = function(req,res,next){
+	/*request----
+	  localhost:3001/test/sendSmsTwilio
+	*/
 var client = new twilio(config.twilio.accountSid, config.twilio.authToken);
 console.log(`${config.twilio.code}9971967452`);
 
@@ -18,20 +21,11 @@ client.messages.create({
         from: config.twilio.number // From a valid Twilio number
     })
     .then((message) =>{
-    	//console.log(message);
     	//console.log(message.sid,"sent to "+config.twilio.to)
     	res.json({status:200,message:`message send successfully to ${config.twilio.code}9971967452`});
       } 	
     )
-    .catch((err) => console.log(err));
-/*client.messages.create({
-    body: 'Hello from Node',
-    to: `${config.twilio.code}9971967452`,
-    //to: '+12345678901',  // Text this number
-    from: '+12345678901' // From a valid Twilio number
-})
-.then((message) =>console.log(message));*/
-	
+    .catch((err) => console.log(err));	
 };
 exports.getSecondTestAdd = function(req,res,next){
 	
