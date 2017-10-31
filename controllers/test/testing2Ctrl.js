@@ -5,9 +5,45 @@ const jwt 	 	= require('jsonwebtoken'),
 	  async 	= require('async'),
 	  _ 		= require('lodash'),
 	  mongoose 	= require('mongoose'),
+	  stripe 	= require("stripe")("sk_test_B54oZQAv8W6TVt6nHTAcysjo"),
 	  config 	= require(path.resolve(`./config/env/local`)),
   	  Test      = require(path.resolve('./models/test'));
 
+exports.stripe = function(req,res,next){
+	/*request----
+	  http://localhost:3001/test/stripe   (call this from browser)
+	*/
+	console.log('stripe---');
+	res.render('stripe', { title: 'stripe payment' });
+};
+exports.your_server_side_code = function(req,res,next){
+	/*this method only for redirect for payment successfull by previous method.
+
+		request
+		----------
+		{ stripeToken: 'tok_1BIwAuF0Mpi16mtBnm4eBeiQ',
+		  stripeTokenType: 'card',
+		  stripeEmail: 'mayank_singh@seologistics.com' }
+	*/
+	console.log(req.body);
+	let token = req.body.stripeToken;
+	// Charge the user's card:
+	stripe.charges.create({
+	  amount: 1000,
+	  currency: "usd",
+	  description: "Example charge",
+	  source: token,
+	}, function(err, charge) {
+	  if(err){
+	  	console.log('Error--- '+JSON.stringify(err));
+	  }else{
+	  	console.log("-------charge----------");
+	  	console.log(charge);
+	  	res.render('stripe_success', { title: 'stripe payment successfully' });
+
+	  }
+	});
+};
 exports.sendSmsTwilio = function(req,res,next){
 	/*request----
 	  localhost:3001/test/sendSmsTwilio
