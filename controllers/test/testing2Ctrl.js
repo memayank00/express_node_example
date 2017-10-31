@@ -8,7 +8,7 @@ const jwt 	 	= require('jsonwebtoken'),
 	  stripe 	= require("stripe")("sk_test_B54oZQAv8W6TVt6nHTAcysjo"),
 	  config 	= require(path.resolve(`./config/env/local`)),
   	  Test      = require(path.resolve('./models/test'));
-
+/*this is test to merge*/
 exports.stripe = function(req,res,next){
 	/*request----
 	  http://localhost:3001/test/stripe   (call this from browser)
