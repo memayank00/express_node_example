@@ -1,6 +1,7 @@
 'use strict';
 const jwt 	 	= require('jsonwebtoken'),
 	  twilio 	= require('twilio'),
+	  twilioAPI = require('twilio-api'),
 	  path 	 	= require('path'),
 	  async 	= require('async'),
 	  _ 		= require('lodash'),
@@ -63,6 +64,10 @@ client.messages.create({
     )
     .catch((err) => console.log(err));	
 };
+exports.replySmsTwilio = function(req,res,next){
+	console.log('replySmsTwilio---- ');	
+	
+};
 exports.getSecondTestAdd = function(req,res,next){
 	
 	/*request----
@@ -84,6 +89,8 @@ exports.getSecondTestFind = function(req,res,next){
 	/*request----
 	  localhost:3001/test/secondCallFind
 	  {"email":"memayank00@gmail.com"}
+	  Authorization :  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1lbWF5YW5rMDBAZ21haWwuY29tIiwibmFtZSI6Ik1heWFuayBTaW5naCIsImlhdCI6MTUwOTM0NjM1NH0.RRtS1TtD4E5_YIDupqkgmtfY_Go383DZ7MmaceNrZCc
+
 	*/
 	console.log(req.body);
 	Test.find(req.body,(err,obj)=>{
@@ -110,7 +117,6 @@ exports.getSecondTestUpdate = function(req,res,next){
 	});
 };
 exports.getSecondTestAuthentication = function(req,res,next){
-	
 	/*request----
 	  localhost:3001/test/getSecondTestAuthentication
 	  {"email":"memayank00@gmail.com"}
@@ -122,12 +128,49 @@ exports.getSecondTestAuthentication = function(req,res,next){
 		}else{
 			if(obj){
 				let _obj = {email:obj.email,name:obj.name};
-				let token = jwt.sign(_obj, new Buffer(config.secret).toString('base64'));
+				let token = jwt.sign(_obj, new Buffer(config.secret).toString('base64'),{ expiresIn: 60 * 60 });
 				res.json({status:200,message:"success find",data:obj,token:token});
 			}else{
 			 res.json({status:201,message:"user not found",data:obj});	
-			}
-			
+			}			
 		}
 	});
 };
+/*two way messaging*/
+//https://support.twilio.com/hc/en-us/articles/235288367-Receiving-two-way-SMS-messages-with-Twilio
+// https://www.twilio.com/console/sms/getting-started/build
+//https://www.twilio.com/docs/api/twiml/sms/your_response
+//https://www.twilio.com/docs/api/twiml/sms/twilio_request
+
+//https://support.twilio.com/hc/en-us/articles/223136047--Configure-your-number-s-SMS-URL-message-on-new-Twilio-numbers
+
+/*
+Mongodb Backup
+----------------
+https://www.digitalocean.com/community/tutorials/how-to-back-up-restore-and-migrate-a-mongodb-database-on-ubuntu-14-04
+
+*/
+/*
+prototype(run in chrome)
+---------------------------
+1-	function check(){
+		this.name='mayank';
+	}
+	check.prototype.last = "singh";
+	var check = new check();
+	console.log('i am '+check.name+' '+check.last);
+	console.log(check);
+
+2-	function check(first){
+		this.name=first;
+	}
+	check.prototype.last = 'Singh';
+	check.prototype.foo = function(){
+		console.log('this is proto function');
+	};
+	var check = new check('Mayank');
+
+	console.log('check-- '+JSON.stringify(check));
+	console.log(check.last);
+	console.log(new check.foo());
+*/

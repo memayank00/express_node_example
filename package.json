@@ -21,6 +21,7 @@
     "serve-favicon": "~2.4.5",
     "stripe": "^5.2.0",
     "stylus": "0.54.5",
-    "twilio": "^3.9.1"
+    "twilio": "^3.9.1",
+    "twilio-api": "^0.3.3"
   }
 }

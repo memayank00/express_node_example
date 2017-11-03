@@ -28,6 +28,13 @@ var app = express();
 mongoose.set('debug', config.db.DEBUG);
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.db.URL, {autoReconnect: true, useMongoClient:true});
+mongoose.connection.on("connected", function(obj){
+	console.log(`Database connected successfully on ${config.db.URL}`);
+});
+
+mongoose.connection.on("error", function(error){
+	console.log(`Database connection failed! try again due to ${error}`);
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
