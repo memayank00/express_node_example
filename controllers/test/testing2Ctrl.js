@@ -173,4 +173,28 @@ prototype(run in chrome)
 	console.log('check-- '+JSON.stringify(check));
 	console.log(check.last);
 	console.log(new check.foo());
+
+change date formate like- 
+---------------------------------------------
+function changeDateFormate(created){
+ //created should like 1491304729742.0 or any javascript formate
+ var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+  //var dateObj = new Date(1491304729742.0),
+  var dateObj = new Date(created),
+      month = monthNames[dateObj.getUTCMonth() + 1],
+      day = dateObj.getUTCDate(),
+      year = dateObj.getUTCFullYear(),
+  //code for AM & PM Formate
+      hours = dateObj.getHours(),
+      minutes = dateObj.getMinutes(),
+      ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; 
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm,
+      formatedDate = day+'-'+month+'-'+year+' '+strTime ; 
+   return formatedDate;
+   //Tue Apr 04 2017 16:48:49 GMT+0530 (IST)
+}	
+changeDateFormate(created)
 */
