@@ -8,6 +8,11 @@ const jwt 	 	= require('jsonwebtoken'),
 	  mongoose 	= require('mongoose'),
 	  stripe 	= require("stripe")("sk_test_B54oZQAv8W6TVt6nHTAcysjo"),
 	  config 	= require(path.resolve(`./config/env/local`)),
+	  url 		= require("url"),
+	  ping 		= require ("net-ping"),
+	  request 	= require('request'),
+	  validUrl  = require('valid-url'),
+	  needle  = require('needle'),
   	  Test      = require(path.resolve('./models/test'));
 /*this is test to merge*/
 exports.stripe = function(req,res,next){
@@ -131,10 +136,56 @@ exports.getSecondTestAuthentication = function(req,res,next){
 				let token = jwt.sign(_obj, new Buffer(config.secret).toString('base64'),{ expiresIn: 60 * 60 });
 				res.json({status:200,message:"success find",data:obj,token:token});
 			}else{
-			 res.json({status:201,message:"user not found",data:obj});	
+			 	res.json({status:201,message:"user not found",data:obj});	
 			}			
 		}
 	});
+};
+exports.checkValidUrl = function(req,res,next){
+	//needle.get('158.85.76.204:8019', { compressed: true }, function(err, resp) {
+	//needle.get('35.166.83.35', { compressed: true }, function(err, resp) {
+	needle.get('https://www.zenbrisa.com', { compressed: true }, function(err, resp) {		
+      if(err){
+      	console.log('invalid------------');  
+      }else{
+      	console.log(resp.body); 
+      	console.log('valid----------------');   
+      }
+                              
+	});
+
+	
+	/*request('https://www.zenbrisa.com', function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    console.log(body) 
+	  }else{
+	  	console.log('invalid---------'); 
+	  }
+	})*/
+
+	/*var urll = "https://www.zenbrisa.co"
+	if (validUrl.isUri(urll)){
+	    console.log('Looks like an URI');
+	} 
+	else {
+	    console.log('Not a URI');
+	}*/
+
+ 	/*var session = ping.createSession ();
+ 	var target = 'https://www.zenbrisa.com/search-page';
+	session.pingHost (target, function (error, target) {
+	    if (error)
+	        console.log (target + ": " + error.toString ());
+	    else
+	        console.log (target + ": Alive");
+	});	*/
+
+		
+	/*var result = url.parse('https://www.zenbrisa.com/search-page');
+	console.log(result.hostname);*/
+/*	let myURL =
+  new url('https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash');
+  console.log(myURL);*/
 };
 /*two way messaging*/
 //https://support.twilio.com/hc/en-us/articles/235288367-Receiving-two-way-SMS-messages-with-Twilio
@@ -197,4 +248,39 @@ function changeDateFormate(created){
    //Tue Apr 04 2017 16:48:49 GMT+0530 (IST)
 }	
 changeDateFormate(created)
+
+
+------------------------------------------------------------------------------------------------
+Sh script for mongodb dump 
+---------------------------- create a file name with mongodb_dump.sh
+#!/bin/bash
+MONGO_DATABASE="myDB"
+APP_NAME="360emr"
+
+MONGO_HOST="127.0.0.1"
+MONGO_PORT="27017"
+TIMESTAMP=`date +%F-%H%M`
+MONGODUMP_PATH="/usr/bin/mongodump"
+BACKUPS_DIR="/home/ubuntu/backups/$APP_NAME"
+BACKUP_NAME="$APP_NAME-$TIMESTAMP"
+
+# mongo admin --eval "printjson(db.fsyncLock())"
+# $MONGODUMP_PATH -h $MONGO_HOST:$MONGO_PORT -d $MONGO_DATABASE  mongodump -d zenbrisa --gzip
+$MONGODUMP_PATH  --gzip -d $MONGO_DATABASE
+# mongo admin --eval "printjson(db.fsyncUnlock())"
+
+mkdir -p $BACKUPS_DIR
+mv dump $BACKUP_NAME
+tar -zcvf $BACKUPS_DIR/$BACKUP_NAME.tgz $BACKUP_NAME
+rm -rf $BACKUP_NAME
+find $BACKUPS_DIR -mtime +30 -type f -delete
+
+----------------- File End
+
+this command to assign permisson for user to be executable---  sudo chmod +x mongo_backup.sh
+
+
+this is cron for backup---   00 01 * * * /bin/sh /home/ubuntu/sh_scripts/mongo_backup.sh > /dev/null 2>&1
+
+------------------------------------------------------------------------------------------------------------
 */

@@ -18,10 +18,15 @@
     "method-override": "^2.3.10",
     "mongoose": "^4.12.4",
     "morgan": "~1.9.0",
+    "needle": "^2.0.1",
+    "net-ping": "^1.2.1",
+    "request": "^2.83.0",
     "serve-favicon": "~2.4.5",
     "stripe": "^5.2.0",
     "stylus": "0.54.5",
     "twilio": "^3.9.1",
-    "twilio-api": "^0.3.3"
+    "twilio-api": "^0.3.3",
+    "url": "^0.11.0",
+    "valid-url": "^1.0.9"
   }
 }

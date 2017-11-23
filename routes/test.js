@@ -27,7 +27,8 @@ router.use(expressJWT({
 	'/test/sendSmsTwilio',
 	'/test/replySmsTwilio',
 	'/test/stripe',
-	'/test/your-server-side-code'
+	'/test/your-server-side-code',
+	'/test/check-valid-url'
 ]}));
 
 //console.log(ctrl);
@@ -40,6 +41,7 @@ router.get('/sendSmsTwilio', ctrl.testing2Ctrl.sendSmsTwilio);
 router.get('/replySmsTwilio', ctrl.testing2Ctrl.replySmsTwilio);
 router.get('/stripe', ctrl.testing2Ctrl.stripe);
 router.post('/your-server-side-code', ctrl.testing2Ctrl.your_server_side_code);
+router.post('/check-valid-url', ctrl.testing2Ctrl.checkValidUrl);
 /*router.get('/stripe', function(req, res, next) {
 	console.log('this is stripe');
 
