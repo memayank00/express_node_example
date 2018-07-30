@@ -5,7 +5,12 @@ https://shapeshed.com/creating-a-basic-site-with-node-and-express/
 
 commant to run project
 ---------------------------
+Normal Run----
+DEBUG=express_node_example:* npm start
+
+nodemon run----
 DEBUG=express_node_example:* nodemon
+nodemon www
 */
 var express = require('express');
 var path = require('path');

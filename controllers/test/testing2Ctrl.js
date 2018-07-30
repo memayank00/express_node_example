@@ -6,6 +6,7 @@ const jwt 	 	= require('jsonwebtoken'),
 	  async 	= require('async'),
 	  _ 		= require('lodash'),
 	  mongoose 	= require('mongoose'),
+	  moment 	= require('moment-timezone'),
 	  stripe 	= require("stripe")("sk_test_B54oZQAv8W6TVt6nHTAcysjo"),
 	  config 	= require(path.resolve(`./config/env/local`)),
 	  url 		= require("url"),
@@ -14,6 +15,21 @@ const jwt 	 	= require('jsonwebtoken'),
 	  validUrl  = require('valid-url'),
 	  needle  = require('needle'),
   	  Test      = require(path.resolve('./models/test'));
+  
+  /*this methos used for time zone*/
+function toTimeZone(time, zone) {
+    var format = 'YYYY/MM/DD HH:mm:ss ZZ';
+    return moment(time, format).tz(zone).format(format);
+}
+exports.changeIntoTimezone = function(req,res,next){
+	console.log('changeIntoTimezone----------')
+	console.log('India-- '+toTimeZone(new Date(),'UTC'));
+	console.log('Newyork-- '+toTimeZone(new Date(),'EST'));
+	console.log('Chicago-- '+toTimeZone(new Date(),'CST'));
+	console.log('Salt Lake City-- '+toTimeZone(new Date(),'MST'));
+	console.log('Los Angeles-- '+toTimeZone(new Date(),'PST'));
+
+};	  
 /*this is test to merge*/
 exports.stripe = function(req,res,next){
 	/*request----
@@ -63,7 +79,7 @@ client.messages.create({
         from: config.twilio.number // From a valid Twilio number
     })
     .then((message) =>{
-    	//console.log(message.sid,"sent to "+config.twilio.to)
+    	console.log(message.sid,"sent to "+config.twilio.to)
     	res.json({status:200,message:`message send successfully to ${config.twilio.code}9971967452`});
       } 	
     )

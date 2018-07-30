@@ -28,7 +28,8 @@ router.use(expressJWT({
 	'/test/replySmsTwilio',
 	'/test/stripe',
 	'/test/your-server-side-code',
-	'/test/check-valid-url'
+	'/test/check-valid-url',
+	'/test/change-into-timezone'
 ]}));
 
 //console.log(ctrl);
@@ -42,6 +43,7 @@ router.get('/replySmsTwilio', ctrl.testing2Ctrl.replySmsTwilio);
 router.get('/stripe', ctrl.testing2Ctrl.stripe);
 router.post('/your-server-side-code', ctrl.testing2Ctrl.your_server_side_code);
 router.post('/check-valid-url', ctrl.testing2Ctrl.checkValidUrl);
+router.post('/change-into-timezone', ctrl.testing2Ctrl.changeIntoTimezone);
 /*router.get('/stripe', function(req, res, next) {
 	console.log('this is stripe');
 
